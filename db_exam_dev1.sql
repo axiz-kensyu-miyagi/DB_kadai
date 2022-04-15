@@ -1,3 +1,4 @@
+--演習問題1-発展
 -- 1 データベース作成
 create database axiz_exam_dev;
 
@@ -86,5 +87,5 @@ WHERE amount IS NULL;
 
 --テーブル確認用
 SELECT *
-FROM sales
-order by sales_id;
+FROM sales;
+

@@ -1,3 +1,4 @@
+--演習問題1-基本
 -- 1 データベース作成
 create database db_exam;
 
