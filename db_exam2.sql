@@ -1,3 +1,4 @@
+--演習問題2-基本
 -- 1 データベース作成
 create database db_exam;
 
@@ -62,6 +63,9 @@ WHERE student_id=10;
 SELECT *
 FROM student;
 
+SELECT *
+FROM major;
+
 
 --2基本-1 AND条件、並べ替え
 SELECT *
@@ -70,6 +74,7 @@ WHERE grade = 1
 AND hometown = '東京'
 ORDER BY student_id;
  
+
 --2基本-2 OR条件、LIKE指定、並べ替え
 SELECT *
 FROM student
@@ -77,11 +82,13 @@ WHERE grade = 1
 OR student_name LIKE '%本'
 ORDER BY student_id DESC;
 
+
 --2基本-3 GROUP_BY、MAX
 SELECT major_id, max(grade)
 FROM student
 GROUP BY major_id
 ORDER BY major_id;
+
 
 --2基本-4 GROUP_BY、COUNT、HAVING
 SELECT hometown, count(*)count
@@ -90,12 +97,14 @@ GROUP BY hometown
 HAVING count(*) >= 2
 ORDER BY hometown;
 
+
 --2基本-5 JOIN、並べ替え
 SELECT student_name, major_name
 FROM student AS s
 INNER JOIN major as m
 ON s.major_id = m.major_id
 ORDER BY major_name,student_name;
+
 
 --2基本-6 JOIN、条件指定、並べ替え
 SELECT student_id, student_name, hometown, major_name
@@ -104,12 +113,39 @@ INNER JOIN major as m
 ON s.major_id = m.major_id AND s.hometown <> '東京'
 ORDER BY major_name,student_id;
 
+
 --2基本-7 サブクエリその1
+SELECT student_id, student_name, grade
+FROM student AS s
+WHERE s.major_id = (SELECT major_id 
+                    FROM major AS m
+                    WHERE major_name = '英文学')
+ORDER BY student_id;
 
 
 --2基本-8 サブクエリその2 IN
+SELECT
+  s.student_id
+ ,s.student_name
+ ,s.major_id
+FROM student AS s
+WHERE s.major_id IN (SELECT major_id  
+                     FROM student
+                     GROUP BY major_id
+                     HAVING count(*) > 2
+                     )  
+ORDER BY s.major_id
+, s.student_id;
 
 
-
+--SELECT major_id
+--FROM (
+--SELECT major_id 
+--      ,count(major_id) AS CNT 
+--FROM student
+--GROUP BY major_id
+--) mj
+--WHERE mj.CNT > 2
+--サブクエリ内のFROMをサブクエリで使用できる
 
 
